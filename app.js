@@ -1,4 +1,5 @@
 const path = require('path');
+require('dotenv').config();
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -59,11 +60,18 @@ app.use((error, req, res, next) => {
   res.status(status).json({ message: message, data: data });
 });
 
+const PORT = process.env.PORT || 8080;
+
 mongoose
-  .connect(
-    'mongodb+srv://butt_usman:z45xN2g8kxv2EJ8@cluster0.a1wwx.mongodb.net/feeds?retryWrites=true&w=majority'
-  )
+  .connect(process.env.DB_STRING)
   .then(result => {
-    app.listen(8080);
+    const server = app.listen(PORT,() => {
+      console.log(`App listening on port ${PORT}!`);
+  });
+
+    const io = require('./socket').init(server);
+    io.on('connection', socket => {
+      console.log('Client connected');
+    });
   })
   .catch(err => console.log(err));
