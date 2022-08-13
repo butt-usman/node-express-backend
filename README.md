@@ -14,7 +14,7 @@
   </a>
 </p>
 
-> Sample Basic Backend
+> Sample Basic Backend in Monolithic
 
 ### 🏠 [Homepage](https://github.com/butt-usman/node-express-backend#readme)
 
